@@ -1,3 +1,3 @@
-module test
+module mydocker
 
 go 1.17

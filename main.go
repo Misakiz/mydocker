@@ -1,8 +1,14 @@
+//go:build linux
+// +build linux
+
 package main
 
-import docker "test/run"
+import (
+	mydocker "mydocker/run"
+)
 
 func main() {
-	docker.MyDockerRun()
+	mydocker.MyDockerRun()
 
 }
+
