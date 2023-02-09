@@ -42,11 +42,18 @@ func run() {
 
 func child() {
 	cmd := exec.Command(os.Args[2])
+	//设置host
 	syscall.Sethostname([]byte("container"))
+	// MS_NOEXEC: 在本文件系统中不允许运行其他程序
+	// MS_NOSUID: 在本系统中运行程序的时候，不允许set-user-id和不允许set-group-id
+	// MS_NODEV: 所有mount的系统都会默认设定的参数
+	defaultMountFlags := syscall.MS_NOEXEC | syscall.MS_NOSUID | syscall.MS_NODEV
+	syscall.Mount("proc", "/proc", "proc", uintptr(defaultMountFlags), "")
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
 		panic(err)
 	}
+	syscall.Unmount("/proc", 0)
 }
