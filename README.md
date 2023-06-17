@@ -1,2 +1,2 @@
 # mydocker
-手写docker
+Learn docker by coding it!
